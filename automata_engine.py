@@ -1,4 +1,3 @@
-import tkinter as tk
 import random
 
 STATE_TAKEN = 1
@@ -109,4 +108,3 @@ class Universe:
 
     def get_grid(self):
         return self.grid
-

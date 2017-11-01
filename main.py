@@ -1,0 +1,2 @@
+app = Application()
+app.mainloop()
