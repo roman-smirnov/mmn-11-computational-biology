@@ -1,8 +1,9 @@
 import tkinter as tk
-import color_generator
+
+from gui import color_generator
 
 
-class Application(tk.Frame):
+class SquareGridApp(tk.Frame):
     def __init__(self, rows, cols, row_size, col_size, num_of_states, world_state_obj,  update_time_interval):
         tk.Frame.__init__(self, None, background='#000000')  # set the frame background color
         self.master.title("Cellular Automata")  # set the ui window name
@@ -45,8 +46,8 @@ class Application(tk.Frame):
     def app_draw_screen(self):
         """ delete the previous screen and redraw the grid and automata """
         self.canvas.delete("all")
+        self.app_draw_grid()  # uncomment to draw grid lines
         self.app_color_fill_cells()  # draw the automata world state
-        # self.app_draw_grid()  # uncomment to draw grid lines
 
     def app_update(self):
         self.world_state.update_world_state()  # this call causes the automata to transition to the next generation
