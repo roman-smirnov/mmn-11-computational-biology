@@ -1,31 +1,44 @@
-# pyca.animation
-# Wraps matplotlib to provide animation
+# Portable 2d cellular automata simulation with GUI (tkinter)
 #
-# Author:   Benjamin Bengfort <benjamin@bengfort.com>
-# Created:  Fri Jan 31 09:41:31 2014 -0500
-#
-# Copyright (C) 2014 Bengfort.com
-# For license information, see LICENSE.txt
-#
-# ID: animation.py [] benjamin@bengfort.com $
+# Author:   Roman Smirnov
+# Created:  4/11/2017
 
-from automata.food_chain_automata import FoodChainAutomaton
-from automata.random_automata import RandomAutomaton
-from gui.square_grid_gui import SquareGridApp
+import sys  # used to get command line arguments
+from automata.mmn11_automata import *
+from gui.square_grid_view import *
+from stats.stats_runner import *
 
 
-ROW_SIZE = 10
-COL_SIZE = 10
-DEFAULT_ROWS = 50
-DEFAULT_COLS = 50
-TICK_TIME = 200
-
-# TODO: implemented the escape automata
-# TODO: see if you can do something off ui thread
 # TODO: implement a command line main method
-automaton = RandomAutomaton(DEFAULT_ROWS, DEFAULT_COLS)
-# automaton = FoodChainAutomaton(DEFAULT_ROWS, DEFAULT_COLS)
+# TODO: implement show exit area
+# TODO: go over entire project and check documentation
 
-gui_app = SquareGridApp(DEFAULT_ROWS, DEFAULT_COLS, ROW_SIZE, COL_SIZE,
-                        automaton.get_num_of_states(), automaton, TICK_TIME)
-gui_app.mainloop()
+
+def run_gui_demo():
+    DEFAULT_ROWS = 25
+    DEFAULT_COLS = 25
+    ROW_SIZE = 10
+    COL_SIZE = 10
+    TICK_TIME = 10
+    EMERGENCY_EXITS = [(0, 0), (24, 24)]
+    automaton = EmergencyEscapeAutomaton(DEFAULT_ROWS, DEFAULT_COLS, EMERGENCY_EXITS, ppl_interval=2)  # run with ui
+    gui = SquareGridView(DEFAULT_ROWS, DEFAULT_COLS, ROW_SIZE, COL_SIZE,
+                         automaton.get_num_of_states(), automaton, TICK_TIME)
+    gui.mainloop()
+    automaton.print_stats()
+
+
+def run_stats_demo():
+    demo_choice_bias()  # slight bias toward lower y,x exits on grid....
+
+    demo_dist_modifier()
+
+    demo_crowd_modifier()
+
+    demo_exit_radius()
+
+    demo_people_density()
+
+
+if __name__ == '__main__':
+    print(sys.argv)
